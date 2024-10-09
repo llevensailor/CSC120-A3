@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 class Conversation {
 /**
@@ -15,9 +16,7 @@ class Conversation {
     int rounds = input.nextInt();
      
     //Transcript string holder and response string holder 
-    String [] transcript = new String[2 * rounds + 3];
-    String newResponse; 
-    
+    String [] transcript = new String[2 * rounds + 3]; 
     System.out.println("Hi! What would you like to talk about?");
     transcript[0] = "Hi! What would you like to talk about?";
     String response = input.nextLine();
@@ -25,66 +24,74 @@ class Conversation {
     //add response to the transcript 
     transcript[1] = response; 
     
-    for(int i = 0; i < rounds; i++)
+    for(int i = 1; i < rounds; i++)
     { 
       //Mirroring
-      newResponse = response; 
-      if(response.contains("I"))
+      String[] newResponse = response.split(" "); 
+      for (int j = 0; j < newResponse.length; j++) {
+      if(newResponse[j].contains("I"))
       { 
-        newResponse = newResponse.replace("I", "You");
+        newResponse[j] = newResponse[j].replace("I", "You");
       
       }
-    if(newResponse.contains("me"))
+     else if(newResponse[j].contains("me"))
     { 
-      newResponse = newResponse.replace("me", "you");
+      newResponse[j] = newResponse[j].replace("me", "you");
       
     }
-    if(newResponse.contains("am"))
+     else if(newResponse[j].contains("am"))
     { 
-      newResponse = newResponse.replace("am", "are");
+      newResponse[j] = newResponse[j].replace("am", "are");
       
     }
-    if(newResponse.contains("you"))
+     else if(newResponse[j].contains("you"))
     { 
-      newResponse = newResponse.replace("you", "I");
+      newResponse[j] = newResponse[j].replace("you", "I");
       
     }
-    if(newResponse.contains("my"))
+    else if(newResponse[j].contains("my"))
     { 
-      newResponse = newResponse.replace("my", "your");
+      newResponse[j] = newResponse[j].replace("my", "your");
       
     }
-     if(newResponse.contains("your"))
+     else if(newResponse[j].contains("your"))
     { 
-      newResponse = newResponse.replace("your", "my");
+      newResponse[j] = newResponse[j].replace("your", "my");
       
     }
-    if(newResponse.contains("."))
+     else if(newResponse[j].contains("."))
     { 
-      newResponse = newResponse.replace(".", "?");
+      newResponse[j] = newResponse[j].replace(".", "?");
       
-    }
+    } }
     //Randomly replying with a different response
+    String newSentence = ""; 
+    for(int k = 0; k < newResponse.length; k++)
+    { if(k == newResponse.length - 1) {
+      newSentence += newResponse[k];
+    }
     else 
-    { 
+      { newSentence += newResponse[k] + " ";} } 
+    if(newSentence == response)
+      { 
       double num = Math.random(); 
       if (num < .25)
-      { newResponse = "Oh yeah?"; }
+      { newSentence = "Oh yeah?"; }
       else if (num < .5)
-      { newResponse = "That's cool."; }
+      { newSentence = "That's cool."; }
       else if (num < .75)
-      { newResponse = "Wow!";}
+      { newSentence = "Wow!";}
       else 
-      { newResponse = "Mhm"; }
+      { newSentence = "Mhm"; }
     }
-    System.out.println(newResponse);
+    System.out.println(newSentence);
     transcript[2 * i + 1] = response;
-    transcript[2 * i + 2] = newResponse; 
+    transcript[2 * i + 2] = newSentence; 
 
     response = input.nextLine();
     }
     System.out.println("Thanks for talking!"); 
-// makes sure the last string in response gets added 
+    // makes sure the last string in response gets added 
     transcript[transcript.length - 2] = response; 
     transcript[transcript.length - 1] = "Thanks for talking!";
     System.out.println();
@@ -92,13 +99,6 @@ class Conversation {
     System.out.println("Transcript:");
     for (String line : transcript)
     { System.out.println(line);}
-
-
-
-
-
-
-
 
   }
 }
